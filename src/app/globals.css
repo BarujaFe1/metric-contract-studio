@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #f3f1ec;
+  --bg-elevated: #fffcf7;
+  --bg-muted: #e8e4db;
+  --ink: #1c2430;
+  --ink-soft: #4a5565;
+  --ink-faint: #7a8494;
+  --line: #d5d0c4;
+  --line-strong: #b7b0a0;
+  --brand: #0f5c4c;
+  --brand-deep: #0a3f35;
+  --brand-soft: #d8ebe5;
+  --accent: #c45c26;
+  --accent-soft: #f4e0d4;
+  --ready: #1f7a4c;
+  --ready-soft: #d9efe3;
+  --draft: #8a6d1f;
+  --draft-soft: #f3e9c8;
+  --deprecated: #6b7280;
+  --deprecated-soft: #e5e7eb;
+  --critical: #b42318;
+  --critical-soft: #fde8e6;
+  --warning: #b54708;
+  --warning-soft: #feefc7;
+  --info: #175cd3;
+  --info-soft: #dfeeff;
+  --score-high: #1f7a4c;
+  --score-mid: #b54708;
+  --score-low: #b42318;
+  --shadow: 0 1px 0 rgba(28, 36, 48, 0.04), 0 12px 32px rgba(28, 36, 48, 0.06);
+  --radius: 10px;
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(15, 92, 76, 0.08), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, rgba(196, 92, 38, 0.07), transparent 50%),
+    linear-gradient(180deg, #f7f4ee 0%, var(--bg) 40%, #efebe3 100%);
+  font-family: var(--font-sans), "Segoe UI", sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), "Times New Roman", serif;
+  font-optical-sizing: auto;
+}
+
+.font-mono {
+  font-family: var(--font-mono), "Consolas", monospace;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: var(--brand-soft);
+  color: var(--brand-deep);
+}
+
+.surface {
+  background: color-mix(in srgb, var(--bg-elevated) 92%, white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.surface-muted {
+  background: color-mix(in srgb, var(--bg-muted) 55%, white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.grid-noise {
+  background-image:
+    linear-gradient(rgba(28, 36, 48, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28, 36, 48, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.prose-contract h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  margin: 1.5rem 0 0.6rem;
+}
+
+.prose-contract p,
+.prose-contract li {
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
