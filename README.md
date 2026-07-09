@@ -10,7 +10,7 @@
     <a href="#1-visão-geral--overview">PT-BR / English Overview</a> •
     <a href="#-product-preview">Preview</a> •
     <a href="#-screenshots">Screenshots</a> •
-    <a href="#️-stack--tecnologias">Stack</a> •
+    <a href="#-stack--tecnologias">Stack</a> •
     <a href="#-arquitetura--architecture">Architecture</a> •
     <a href="#-quick-start--início-rápido">Quick Start</a> •
     <a href="#-autor--author">Author</a>
