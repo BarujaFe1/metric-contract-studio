@@ -24,7 +24,22 @@
     <img alt="Vitest" src="https://img.shields.io/badge/Vitest-Testing-729B1B?style=for-the-badge&logo=vitest&logoColor=white" />
     <img alt="Metric Governance" src="https://img.shields.io/badge/Metric%20Governance-Analytics%20Engineering-0F5C4C?style=for-the-badge" />
   </p>
+
+  <p>
+    <a href="https://metric-contract-studio.vercel.app">
+      <img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-metric--contract--studio.vercel.app-0F5C4C?style=for-the-badge" />
+    </a>
+    <a href="https://github.com/BarujaFe1/metric-contract-studio">
+      <img alt="GitHub" src="https://img.shields.io/badge/GitHub-BarujaFe1%2Fmetric--contract--studio-181717?style=for-the-badge&logo=github" />
+    </a>
+  </p>
 </div>
+
+<p align="center">
+  <strong>🚀 Live Demo:</strong>
+  <a href="https://metric-contract-studio.vercel.app">https://metric-contract-studio.vercel.app</a>
+  · frontend-only · 5 demo contracts · localStorage · no backend
+</p>
 
 <p align="center">
   <img src="./assets/hero-cover.png" alt="Metric Contract Studio product overview" width="100%" />
@@ -329,6 +344,11 @@ localStorage persistence (MVP)
 ---
 
 ## 🚀 Quick Start / Início Rápido
+
+### Live Demo
+A versão pública está em **[https://metric-contract-studio.vercel.app](https://metric-contract-studio.vercel.app)**.
+
+Na primeira visita, o Studio carrega automaticamente **5 contratos demo** (Receita líquida, Taxa de conversão, Churn mensal, Ticket médio, Ativação de usuário) via `localStorage` — sem API, Supabase ou backend externo.
 
 ### Pré-requisitos
 - **Node.js** v20 ou superior
