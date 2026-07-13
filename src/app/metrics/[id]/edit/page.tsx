@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { MetricForm } from "@/components/forms/MetricForm";
+import { ContractSkeleton } from "@/components/ui/Skeleton";
 import { useMetricStore } from "@/lib/store";
 
 export default function EditMetricPage() {
@@ -26,7 +27,7 @@ export default function EditMetricPage() {
   }, [hydrated, params.id, metrics]);
 
   if (!hydrated) {
-    return <p className="text-sm text-[var(--ink-faint)]">Loading editor…</p>;
+    return <ContractSkeleton />;
   }
 
   if (!metric) {
@@ -42,6 +43,20 @@ export default function EditMetricPage() {
 
   return (
     <div className="space-y-6">
+      <nav aria-label="Breadcrumb" className="text-xs text-[var(--ink-faint)]">
+        <Link href="/metrics" className="hover:text-[var(--brand)]">
+          Library
+        </Link>
+        <span aria-hidden> / </span>
+        <Link
+          href={`/metrics/${metric.id}`}
+          className="hover:text-[var(--brand)]"
+        >
+          {metric.name}
+        </Link>
+        <span aria-hidden> / </span>
+        <span className="text-[var(--ink-soft)]">Edit</span>
+      </nav>
       <div>
         <p className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--ink-faint)]">
           Edit contract

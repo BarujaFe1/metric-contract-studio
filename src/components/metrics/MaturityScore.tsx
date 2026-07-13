@@ -98,9 +98,9 @@ export function MaturityScore({
               />
             </div>
             <ul className="mt-1.5 space-y-0.5">
-              {component.details.map((detail) => (
+              {component.details.map((detail, index) => (
                 <li
-                  key={detail}
+                  key={`${component.id}-${index}`}
                   className="font-mono text-[11px] text-[var(--ink-faint)]"
                 >
                   {detail}

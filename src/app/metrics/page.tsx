@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MetricCard } from "@/components/metrics/MetricCard";
 import { DemoMetricLoader } from "@/components/metrics/DemoMetricLoader";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { LibrarySkeleton } from "@/components/ui/Skeleton";
 import {
   DOMAINS,
   DOMAIN_LABELS,
@@ -32,7 +33,7 @@ export default function MetricsLibraryPage() {
   );
 
   if (!hydrated) {
-    return <p className="text-sm text-[var(--ink-faint)]">Loading library…</p>;
+    return <LibrarySkeleton />;
   }
 
   return (

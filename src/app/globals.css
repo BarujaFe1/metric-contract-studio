@@ -114,3 +114,36 @@ textarea {
   color: var(--ink-soft);
   line-height: 1.65;
 }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+@keyframes mcs-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.animate-pulse {
+  animation: mcs-pulse 1.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

@@ -22,9 +22,21 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Metric Contract Studio",
+  title: {
+    default: "Metric Contract Studio",
+    template: "%s · Metric Contract Studio",
+  },
   description:
-    "Create, validate, document, and export business metric contracts for analytics engineering teams.",
+    "Create, validate, score and export business metric contracts for analytics engineering governance.",
+  metadataBase: new URL("https://metric-contract-studio.vercel.app"),
+  openGraph: {
+    title: "Metric Contract Studio",
+    description:
+      "Turn ambiguous KPIs into validated, scored, exportable metric contracts.",
+    url: "https://metric-contract-studio.vercel.app",
+    siteName: "Metric Contract Studio",
+    type: "website",
+  },
 };
 
 export default function RootLayout({

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { MetricContract } from "./metric-model";
 
 export const metricStatusSchema = z.enum(["draft", "ready", "deprecated"]);
 export const metricDomainSchema = z.enum([
@@ -76,3 +77,28 @@ export const metricContractSchema = z.object({
   validation_rules: z.array(validationRuleSchema),
   usage_examples: z.array(usageExampleSchema),
 });
+
+export const metricsArraySchema = z.array(metricContractSchema);
+
+export type ParsedMetricsResult =
+  | { ok: true; metrics: MetricContract[] }
+  | { ok: false; metrics: []; error: string };
+
+/**
+ * Soft-parse metrics from untrusted JSON (e.g. localStorage).
+ * Invalid payloads return ok:false instead of throwing.
+ */
+export function parseMetricsPayload(raw: unknown): ParsedMetricsResult {
+  const result = metricsArraySchema.safeParse(raw);
+  if (!result.success) {
+    return {
+      ok: false,
+      metrics: [],
+      error: result.error.issues
+        .slice(0, 3)
+        .map((issue) => `${issue.path.join(".") || "root"}: ${issue.message}`)
+        .join("; "),
+    };
+  }
+  return { ok: true, metrics: result.data as MetricContract[] };
+}

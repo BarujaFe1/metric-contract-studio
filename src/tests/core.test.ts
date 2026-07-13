@@ -7,8 +7,9 @@ import {
   slugify,
   type MetricContract,
 } from "@/lib/metric-model";
+import { parseMetricsPayload } from "@/lib/schemas";
 import { generateSqlTemplate } from "@/lib/sql-generator";
-import { validateMetric } from "@/lib/validation";
+import { enforceReadyStatus, validateMetric } from "@/lib/validation";
 
 describe("slug generation", () => {
   it("slugifies names with accents and spaces", () => {
@@ -105,6 +106,25 @@ describe("metric validation", () => {
       true,
     );
   });
+
+  it("downgrades ready status when critical gaps exist", () => {
+    const metric = createEmptyMetric({
+      name: "Broken ready",
+      status: "ready",
+      owner: "",
+      business_question: "",
+      formula: "",
+    });
+    const enforced = enforceReadyStatus(metric);
+    expect(enforced.status).toBe("draft");
+  });
+
+  it("keeps ready status when contract is complete", () => {
+    const demo = getDemoMetrics()[0];
+    const enforced = enforceReadyStatus({ ...demo, status: "ready" });
+    expect(enforced.status).toBe("ready");
+    expect(validateMetric(enforced).canBeReady).toBe(true);
+  });
 });
 
 describe("maturity score", () => {
@@ -163,5 +183,24 @@ describe("demo data consistency", () => {
     expect(result.ok).toBe(true);
     expect(result.errors).toEqual([]);
     expect(getDemoMetrics()).toHaveLength(5);
+  });
+});
+
+describe("schema persistence boundary", () => {
+  it("accepts valid demo metrics payload", () => {
+    const parsed = parseMetricsPayload(getDemoMetrics());
+    expect(parsed.ok).toBe(true);
+    if (parsed.ok) {
+      expect(parsed.metrics).toHaveLength(5);
+    }
+  });
+
+  it("rejects corrupt payload without throwing", () => {
+    const parsed = parseMetricsPayload([{ id: "broken" }]);
+    expect(parsed.ok).toBe(false);
+    if (!parsed.ok) {
+      expect(parsed.error.length).toBeGreaterThan(0);
+      expect(parsed.metrics).toEqual([]);
+    }
   });
 });

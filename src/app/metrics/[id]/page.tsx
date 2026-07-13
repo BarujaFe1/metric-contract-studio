@@ -8,6 +8,7 @@ import { SqlTemplateViewer } from "@/components/export/SqlTemplateViewer";
 import { ContractSection } from "@/components/metrics/ContractSection";
 import { MaturityScore } from "@/components/metrics/MaturityScore";
 import { MissingFieldsPanel } from "@/components/metrics/MissingFieldsPanel";
+import { ContractSkeleton } from "@/components/ui/Skeleton";
 import {
   DomainBadge,
   SeverityBadge,
@@ -47,19 +48,38 @@ export default function MetricDetailPage() {
   }, [hydrated, params.id, metrics]);
 
   if (!hydrated) {
-    return <p className="text-sm text-[var(--ink-faint)]">Loading contract…</p>;
+    return <ContractSkeleton />;
   }
 
   if (!metric) {
     return (
       <div className="space-y-4">
+        <nav aria-label="Breadcrumb" className="text-xs text-[var(--ink-faint)]">
+          <Link href="/metrics" className="hover:text-[var(--brand)]">
+            Library
+          </Link>
+          <span aria-hidden> / </span>
+          <span>Not found</span>
+        </nav>
         <h1 className="font-display text-3xl">Metric not found</h1>
         <p className="text-sm text-[var(--ink-soft)]">
-          This contract is not in the local library.
+          This contract is not in the local library. Load demos or create a new
+          metric.
         </p>
-        <Link href="/metrics" className="text-sm text-[var(--brand)] hover:underline">
-          Back to library
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/metrics"
+            className="rounded-md bg-[var(--brand)] px-3 py-2 text-sm font-medium text-[var(--bg-elevated)]"
+          >
+            Back to library
+          </Link>
+          <Link
+            href="/metrics/new"
+            className="rounded-md border border-[var(--line)] px-3 py-2 text-sm"
+          >
+            Create metric
+          </Link>
+        </div>
       </div>
     );
   }
@@ -88,6 +108,13 @@ function MetricDetailView({
 
   return (
     <div className="space-y-6">
+      <nav aria-label="Breadcrumb" className="text-xs text-[var(--ink-faint)]">
+        <Link href="/metrics" className="hover:text-[var(--brand)]">
+          Library
+        </Link>
+        <span aria-hidden> / </span>
+        <span className="text-[var(--ink-soft)]">{metric.name}</span>
+      </nav>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2">

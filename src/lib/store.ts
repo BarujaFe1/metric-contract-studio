@@ -53,7 +53,7 @@ export const useMetricStore = create<MetricStore>((set, get) => ({
 
   hydrate: () => {
     if (get().hydrated) return;
-    const stored = loadMetricsFromStorage<MetricContract>();
+    const stored = loadMetricsFromStorage();
     if (stored && stored.length > 0) {
       set({ metrics: stored, hydrated: true });
       return;

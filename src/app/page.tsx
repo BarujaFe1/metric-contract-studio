@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HomeDemoActions } from "@/components/home/HomeDemoActions";
 
 const BENEFITS = [
   {
@@ -13,6 +14,14 @@ const BENEFITS = [
     title: "Ship documentation",
     body: "Export Markdown, SQL templates, and quality checklists for wiki or PR review.",
   },
+];
+
+const JOURNEY = [
+  "Open the library and load the five SaaS/e-commerce demos",
+  "Inspect conversion rate — score, critical gaps, and ownership",
+  "Review the SQL template and quality checklist",
+  "Export Markdown for a wiki/PR handoff",
+  "Create or edit a draft and watch ready-status gates fire live",
 ];
 
 export default function HomePage() {
@@ -40,20 +49,12 @@ export default function HomePage() {
             nobody owns a single definition. This studio turns metrics into
             contracts — validated, scored, and exportable.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/metrics"
-              className="rounded-md bg-[var(--bg-elevated)] px-4 py-2.5 text-sm font-semibold text-[var(--brand-deep)] hover:bg-white"
-            >
-              Open metric library
-            </Link>
-            <Link
-              href="/metrics/new"
-              className="rounded-md border border-white/30 px-4 py-2.5 text-sm font-medium text-white hover:bg-white/10"
-            >
-              Create a contract
-            </Link>
+          <div className="mt-8">
+            <HomeDemoActions />
           </div>
+          <p className="mt-4 text-xs text-[#d8ebe5]/55">
+            Frontend-only demo · localStorage · no backend required
+          </p>
         </div>
       </section>
 
@@ -66,6 +67,46 @@ export default function HomePage() {
             </p>
           </article>
         ))}
+      </section>
+
+      <section className="surface grid gap-6 p-6 md:grid-cols-[1.1fr_0.9fr] md:p-8">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+            Five-minute path
+          </p>
+          <h2 className="font-display mt-2 text-3xl tracking-tight">
+            From ambiguous KPI to reviewable contract
+          </h2>
+          <ol className="mt-5 space-y-3 text-sm text-[var(--ink-soft)]">
+            {JOURNEY.map((step, index) => (
+              <li key={step} className="flex gap-3">
+                <span className="font-mono text-xs text-[var(--brand)]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div className="surface-muted grid-noise flex flex-col justify-between p-5">
+          <div>
+            <p className="text-xs uppercase tracking-[0.14em] text-[var(--ink-faint)]">
+              Demo set
+            </p>
+            <p className="font-display mt-2 text-2xl">5 ready contracts</p>
+            <p className="mt-2 text-sm text-[var(--ink-soft)]">
+              Net revenue, conversion rate, monthly churn, average order value,
+              and user activation — each with formula, grain, validations, and
+              misuse examples.
+            </p>
+          </div>
+          <Link
+            href="/examples"
+            className="mt-6 text-sm font-medium text-[var(--brand)] hover:underline"
+          >
+            Browse demo catalog →
+          </Link>
+        </div>
       </section>
 
       <section className="surface grid gap-6 p-6 md:grid-cols-[1.2fr_0.8fr] md:p-8">

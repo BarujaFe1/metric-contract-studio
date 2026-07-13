@@ -23,6 +23,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-[var(--brand)] focus:px-3 focus:py-2 focus:text-sm focus:text-[var(--bg-elevated)]"
+      >
+        Skip to content
+      </a>
       <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[color-mix(in_srgb,var(--bg-elevated)_88%,transparent)] backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
           <Link href="/" className="group flex items-center gap-3">
@@ -42,7 +48,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-1 md:flex"
+          >
             {NAV.map((item) => {
               const active =
                 item.href === "/"
@@ -57,6 +66,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={active ? "page" : undefined}
                   className={`rounded-md px-3 py-1.5 text-sm transition ${
                     active
                       ? "bg-[var(--brand-soft)] text-[var(--brand-deep)]"
@@ -77,27 +87,53 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
 
-        <nav className="flex gap-1 overflow-x-auto border-t border-[var(--line)] px-4 py-2 md:hidden">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="whitespace-nowrap rounded-md px-3 py-1.5 text-xs text-[var(--ink-soft)] hover:bg-[var(--bg-muted)]"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav
+          aria-label="Mobile"
+          className="flex gap-1 overflow-x-auto border-t border-[var(--line)] px-4 py-2 md:hidden"
+        >
+          {NAV.map((item) => {
+            const active =
+              item.href === "/"
+                ? pathname === "/"
+                : item.href === "/metrics"
+                  ? pathname === "/metrics" ||
+                    (pathname.startsWith("/metrics/") &&
+                      !pathname.startsWith("/metrics/new"))
+                  : pathname === item.href ||
+                    pathname.startsWith(`${item.href}/`);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`whitespace-nowrap rounded-md px-3 py-1.5 text-xs ${
+                  active
+                    ? "bg-[var(--brand-soft)] text-[var(--brand-deep)]"
+                    : "text-[var(--ink-soft)] hover:bg-[var(--bg-muted)]"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
       </header>
 
-      <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
+      <main
+        id="main-content"
+        className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10"
+      >
         {children}
       </main>
 
       <footer className="border-t border-[var(--line)]">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-sm text-[var(--ink-faint)] sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <p>Metric Contract Studio — portfolio MVP for analytics engineering.</p>
-          <p className="font-mono text-xs">localStorage · no backend · TypeScript</p>
+          <p>
+            Metric Contract Studio — portfolio MVP for analytics engineering.
+          </p>
+          <p className="font-mono text-xs">
+            localStorage · no backend · TypeScript
+          </p>
         </div>
       </footer>
     </div>
