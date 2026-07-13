@@ -1,9 +1,12 @@
-import type {
-  MetricContract,
-  MetricField,
-  UsageExample,
-  ValidationRule,
+import {
+  normalizeContract,
+  type MetricContract,
+  type MetricField,
+  type UsageExample,
+  type ValidationRule,
 } from "./metric-model";
+
+type DemoSeed = Omit<MetricContract, "version" | "approval">;
 
 function field(
   metricId: string,
@@ -40,7 +43,7 @@ function example(
 
 const NOW = "2026-07-01T12:00:00.000Z";
 
-export const DEMO_METRICS: MetricContract[] = [
+export const DEMO_METRICS: DemoSeed[] = [
   {
     id: "demo-net-revenue",
     name: "Receita líquida",
@@ -473,15 +476,27 @@ export const DEMO_METRICS: MetricContract[] = [
 ];
 
 export function getDemoMetrics(): MetricContract[] {
-  return DEMO_METRICS.map((metric) => ({
-    ...metric,
-    fields: metric.fields.map((f) => ({ ...f })),
-    validation_rules: metric.validation_rules.map((r) => ({ ...r })),
-    usage_examples: metric.usage_examples.map((e) => ({ ...e })),
-  }));
+  return DEMO_METRICS.map((metric) =>
+    normalizeContract({
+      ...metric,
+      version: 1,
+      approval: {
+        state: "approved",
+        submitted_at: NOW,
+        decided_at: NOW,
+        decision_note: "Seeded demo contract treated as approved for walkthrough.",
+        reviewer_label: "Demo seed",
+      },
+      fields: metric.fields.map((f) => ({ ...f })),
+      validation_rules: metric.validation_rules.map((r) => ({ ...r })),
+      usage_examples: metric.usage_examples.map((e) => ({ ...e })),
+    }),
+  );
 }
 
-export function assertDemoConsistency(metrics: MetricContract[] = DEMO_METRICS): {
+export function assertDemoConsistency(
+  metrics: MetricContract[] = getDemoMetrics(),
+): {
   ok: boolean;
   errors: string[];
 } {

@@ -18,8 +18,14 @@ export default function ExamplesPage() {
           and Markdown export.
         </p>
         <Link
-          href="/metrics"
+          href="/cases/conversion-conflict"
           className="mt-4 inline-block text-sm font-medium text-[var(--brand)] hover:underline"
+        >
+          Start with the conversion conflict case →
+        </Link>
+        <Link
+          href="/metrics"
+          className="mt-2 block text-sm font-medium text-[var(--brand)] hover:underline"
         >
           Open library to load demos →
         </Link>

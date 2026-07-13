@@ -185,7 +185,10 @@ export function validateMetric(metric: MetricContract): ValidationResult {
   const canBeReady = criticalCount === 0;
 
   let suggestedStatus: MetricStatus = metric.status;
-  if (metric.status === "ready" && !canBeReady) {
+  if (
+    (metric.status === "ready" || metric.status === "in_review") &&
+    !canBeReady
+  ) {
     suggestedStatus = "draft";
   } else if (metric.status === "draft" && canBeReady) {
     suggestedStatus = "ready";
@@ -202,8 +205,45 @@ export function validateMetric(metric: MetricContract): ValidationResult {
 
 export function enforceReadyStatus(metric: MetricContract): MetricContract {
   const result = validateMetric(metric);
-  if (metric.status === "ready" && !result.canBeReady) {
-    return { ...metric, status: "draft" };
+  if (
+    (metric.status === "ready" || metric.status === "in_review") &&
+    !result.canBeReady
+  ) {
+    const approval = metric.approval ?? {
+      state: "none" as const,
+      submitted_at: null,
+      decided_at: null,
+      decision_note: "",
+      reviewer_label: "",
+    };
+    return {
+      ...metric,
+      status: "draft",
+      approval: {
+        ...approval,
+        state: approval.state === "pending" ? "none" : approval.state,
+      },
+    };
   }
   return metric;
+}
+
+export function canSubmitForReview(metric: MetricContract): {
+  ok: boolean;
+  reason?: string;
+} {
+  const result = validateMetric(metric);
+  if (!result.canBeReady) {
+    return {
+      ok: false,
+      reason: "Resolve critical gaps before submitting for review.",
+    };
+  }
+  if (metric.status === "in_review") {
+    return { ok: false, reason: "Already in review." };
+  }
+  if (metric.status === "deprecated") {
+    return { ok: false, reason: "Deprecated contracts cannot enter review." };
+  }
+  return { ok: true };
 }

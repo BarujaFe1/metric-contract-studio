@@ -1,4 +1,5 @@
-export type MetricStatus = "draft" | "ready" | "deprecated";
+export type MetricStatus = "draft" | "in_review" | "ready" | "deprecated";
+export type ApprovalState = "none" | "pending" | "approved" | "rejected";
 export type MetricDomain =
   | "sales"
   | "product"
@@ -15,6 +16,14 @@ export type MetricType =
   | "percentile";
 export type RuleSeverity = "info" | "warning" | "critical";
 export type UsageExampleType = "correct" | "incorrect";
+
+export interface MetricApproval {
+  state: ApprovalState;
+  submitted_at: string | null;
+  decided_at: string | null;
+  decision_note: string;
+  reviewer_label: string;
+}
 
 export interface MetricField {
   id: string;
@@ -70,9 +79,33 @@ export interface MetricContract {
   limitations: string;
   created_at: string;
   updated_at: string;
+  /** Monotonic local revision counter (starts at 1). */
+  version: number;
+  approval: MetricApproval;
   fields: MetricField[];
   validation_rules: ValidationRule[];
   usage_examples: UsageExample[];
+}
+
+export function createEmptyApproval(
+  partial?: Partial<MetricApproval>,
+): MetricApproval {
+  return {
+    state: "none",
+    submitted_at: null,
+    decided_at: null,
+    decision_note: "",
+    reviewer_label: "",
+    ...partial,
+  };
+}
+
+export function normalizeContract(metric: MetricContract): MetricContract {
+  return {
+    ...metric,
+    version: metric.version && metric.version > 0 ? metric.version : 1,
+    approval: createEmptyApproval(metric.approval),
+  };
 }
 
 export const DOMAIN_LABELS: Record<MetricDomain, string> = {
@@ -86,8 +119,16 @@ export const DOMAIN_LABELS: Record<MetricDomain, string> = {
 
 export const STATUS_LABELS: Record<MetricStatus, string> = {
   draft: "Draft",
+  in_review: "In review",
   ready: "Ready",
   deprecated: "Deprecated",
+};
+
+export const APPROVAL_LABELS: Record<ApprovalState, string> = {
+  none: "No review",
+  pending: "Pending review",
+  approved: "Approved",
+  rejected: "Rejected",
 };
 
 export const METRIC_TYPE_LABELS: Record<MetricType, string> = {
@@ -108,7 +149,12 @@ export const DOMAINS: MetricDomain[] = [
   "support",
 ];
 
-export const STATUSES: MetricStatus[] = ["draft", "ready", "deprecated"];
+export const STATUSES: MetricStatus[] = [
+  "draft",
+  "in_review",
+  "ready",
+  "deprecated",
+];
 
 export const METRIC_TYPES: MetricType[] = [
   "count",
@@ -165,11 +211,13 @@ export function createEmptyMetric(partial?: Partial<MetricContract>): MetricCont
     limitations: "",
     created_at: now,
     updated_at: now,
+    version: 1,
+    approval: createEmptyApproval(),
     fields: [],
     validation_rules: [],
     usage_examples: [],
   };
-  return {
+  return normalizeContract({
     ...base,
     ...partial,
     id,
@@ -177,7 +225,9 @@ export function createEmptyMetric(partial?: Partial<MetricContract>): MetricCont
     validation_rules: partial?.validation_rules ?? base.validation_rules,
     usage_examples: partial?.usage_examples ?? base.usage_examples,
     slug: partial?.slug ?? base.slug,
-  };
+    approval: createEmptyApproval(partial?.approval),
+    version: partial?.version ?? base.version,
+  });
 }
 
 export function isRatioLike(type: MetricType): boolean {

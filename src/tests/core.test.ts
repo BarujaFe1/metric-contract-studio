@@ -192,6 +192,8 @@ describe("schema persistence boundary", () => {
     expect(parsed.ok).toBe(true);
     if (parsed.ok) {
       expect(parsed.metrics).toHaveLength(5);
+      expect(parsed.metrics[0].version).toBeGreaterThanOrEqual(1);
+      expect(parsed.metrics[0].approval.state).toBeTruthy();
     }
   });
 
@@ -202,5 +204,79 @@ describe("schema persistence boundary", () => {
       expect(parsed.error.length).toBeGreaterThan(0);
       expect(parsed.metrics).toEqual([]);
     }
+  });
+
+  it("normalizes legacy payloads missing version/approval", () => {
+    const demo = getDemoMetrics()[0];
+    const legacy = { ...demo } as Record<string, unknown>;
+    delete legacy.version;
+    delete legacy.approval;
+    const parsed = parseMetricsPayload([legacy]);
+    expect(parsed.ok).toBe(true);
+    if (parsed.ok) {
+      expect(parsed.metrics[0].version).toBe(1);
+      expect(parsed.metrics[0].approval.state).toBe("none");
+    }
+  });
+});
+
+describe("contract diff", () => {
+  it("detects grain and formula changes", async () => {
+    const { diffContracts } = await import("@/lib/contract-diff");
+    const before = getDemoMetrics().find(
+      (m) => m.slug === "taxa-de-conversao",
+    ) as MetricContract;
+    const after = {
+      ...before,
+      formula: "orders / sessions",
+      grain: "user-month",
+    };
+    const entries = diffContracts(before, after);
+    expect(entries.some((e) => e.path === "formula")).toBe(true);
+    expect(entries.some((e) => e.path === "grain")).toBe(true);
+  });
+});
+
+describe("dbt yaml export", () => {
+  it("emits documentation-oriented yaml with slug and meta", async () => {
+    const { exportDbtMetricYaml } = await import("@/lib/dbt-export");
+    const metric = getDemoMetrics()[0];
+    const yaml = exportDbtMetricYaml(metric);
+    expect(yaml).toContain("metrics:");
+    expect(yaml).toContain(`name: ${metric.slug}`);
+    expect(yaml).toContain("Documentation template only");
+    expect(yaml).toContain("contract_version:");
+  });
+});
+
+describe("review gates", () => {
+  it("blocks submit when critical gaps exist", async () => {
+    const { canSubmitForReview } = await import("@/lib/validation");
+    const empty = createEmptyMetric({ name: "Incomplete" });
+    const gate = canSubmitForReview(empty);
+    expect(gate.ok).toBe(false);
+  });
+
+  it("allows submit for complete demo conversion contract", async () => {
+    const { canSubmitForReview } = await import("@/lib/validation");
+    const metric = getDemoMetrics().find(
+      (m) => m.slug === "taxa-de-conversao",
+    ) as MetricContract;
+    // demos are ready/approved; treat as draft-capable for gate
+    const gate = canSubmitForReview({ ...metric, status: "draft" });
+    expect(gate.ok).toBe(true);
+  });
+});
+
+describe("conflict case content", () => {
+  it("documents two conflicting definitions and a resolution slug", async () => {
+    const { CONVERSION_CONFLICT } = await import("@/lib/conflict-case");
+    expect(CONVERSION_CONFLICT.conflicting).toHaveLength(2);
+    expect(CONVERSION_CONFLICT.resolution.contract_slug).toBe(
+      "taxa-de-conversao",
+    );
+    expect(CONVERSION_CONFLICT.interview_script.length).toBeGreaterThanOrEqual(
+      4,
+    );
   });
 });

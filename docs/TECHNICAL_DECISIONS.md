@@ -45,3 +45,25 @@
 **Decision:** Use `crypto.randomUUID()` in the browser.
 
 **Why:** Fewer dependencies, same capability in modern runtimes.
+
+## ADR-008 — Local review + versioning without a backend
+
+**Decision:** Simulate submit/approve/reject and keep version snapshots in `localStorage`.
+
+**Why:** Interviewable governance workflow without inventing fake multi-user auth.
+
+**Trade-off:** Not collaborative; history is browser-local.
+
+## ADR-009 — dbt YAML as documentation template
+
+**Decision:** Export MetricFlow/dbt-like YAML with an explicit “not wired” disclaimer.
+
+**Why:** Shows semantic-layer handoff thinking without claiming production sync.
+
+**Trade-off:** Must be framed as a template, not a deployment artifact.
+
+## ADR-010 — Conflict case as product narrative
+
+**Decision:** Ship `/cases/conversion-conflict` as a first-class demo route.
+
+**Why:** Portfolio signal is organizational value, not just a form CRUD.

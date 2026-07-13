@@ -1,7 +1,18 @@
 import { z } from "zod";
-import type { MetricContract } from "./metric-model";
+import { normalizeContract, type MetricContract } from "./metric-model";
 
-export const metricStatusSchema = z.enum(["draft", "ready", "deprecated"]);
+export const metricStatusSchema = z.enum([
+  "draft",
+  "in_review",
+  "ready",
+  "deprecated",
+]);
+export const approvalStateSchema = z.enum([
+  "none",
+  "pending",
+  "approved",
+  "rejected",
+]);
 export const metricDomainSchema = z.enum([
   "sales",
   "product",
@@ -50,6 +61,14 @@ export const usageExampleSchema = z.object({
   explanation: z.string(),
 });
 
+export const metricApprovalSchema = z.object({
+  state: approvalStateSchema,
+  submitted_at: z.string().nullable(),
+  decided_at: z.string().nullable(),
+  decision_note: z.string(),
+  reviewer_label: z.string(),
+});
+
 export const metricContractSchema = z.object({
   id: z.string().min(1),
   name: z.string(),
@@ -73,6 +92,8 @@ export const metricContractSchema = z.object({
   limitations: z.string(),
   created_at: z.string(),
   updated_at: z.string(),
+  version: z.number().int().positive().optional(),
+  approval: metricApprovalSchema.optional(),
   fields: z.array(metricFieldSchema),
   validation_rules: z.array(validationRuleSchema),
   usage_examples: z.array(usageExampleSchema),
@@ -87,6 +108,7 @@ export type ParsedMetricsResult =
 /**
  * Soft-parse metrics from untrusted JSON (e.g. localStorage).
  * Invalid payloads return ok:false instead of throwing.
+ * Older payloads without version/approval are normalized.
  */
 export function parseMetricsPayload(raw: unknown): ParsedMetricsResult {
   const result = metricsArraySchema.safeParse(raw);
@@ -100,5 +122,10 @@ export function parseMetricsPayload(raw: unknown): ParsedMetricsResult {
         .join("; "),
     };
   }
-  return { ok: true, metrics: result.data as MetricContract[] };
+  return {
+    ok: true,
+    metrics: result.data.map((metric) =>
+      normalizeContract(metric as MetricContract),
+    ),
+  };
 }

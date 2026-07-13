@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { MarkdownExportButton } from "@/components/export/MarkdownExportButton";
+import { ContractExportActions } from "@/components/export/ContractExportActions";
 import { SqlTemplateViewer } from "@/components/export/SqlTemplateViewer";
+import { ApprovalPanel } from "@/components/metrics/ApprovalPanel";
 import { ContractSection } from "@/components/metrics/ContractSection";
 import { MaturityScore } from "@/components/metrics/MaturityScore";
 import { MissingFieldsPanel } from "@/components/metrics/MissingFieldsPanel";
+import { VersionHistoryPanel } from "@/components/metrics/VersionHistoryPanel";
 import { ContractSkeleton } from "@/components/ui/Skeleton";
 import {
   DomainBadge,
@@ -141,7 +143,7 @@ function MetricDetailView({
           >
             Edit
           </Link>
-          <MarkdownExportButton metric={metric} />
+          <ContractExportActions metric={metric} />
           {!confirmDelete ? (
             <button
               type="button"
@@ -292,6 +294,8 @@ function MetricDetailView({
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <MaturityScore result={maturity} />
           <MissingFieldsPanel alerts={validation.alerts} />
+          <ApprovalPanel metric={metric} />
+          <VersionHistoryPanel metric={metric} />
         </aside>
       </div>
     </div>

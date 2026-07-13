@@ -32,9 +32,11 @@
 
 ## Status
 
-**Portfolio MVP — deployed.** Frontend-only (Zustand + localStorage). Five demo contracts load on first visit. SQL templates are documentation, not warehouse jobs.
+**Portfolio MVP — code on `feat/contract-governance-demo`.** Frontend-only (Zustand + localStorage). Five demo contracts, local review/versioning, Markdown + dbt YAML templates, and a conversion conflict case.
 
-Live: [https://metric-contract-studio.vercel.app](https://metric-contract-studio.vercel.app)
+Live URL: [https://metric-contract-studio.vercel.app](https://metric-contract-studio.vercel.app)
+
+> **Deploy note:** Production currently tracks `main`. This branch’s governance features are live only after merge/redeploy. Until then, use `npm run dev` for the full walkthrough.
 
 ---
 
@@ -83,10 +85,13 @@ Five ready demo contracts — net revenue, conversion rate, monthly churn, avera
 | --- | --- |
 | Metric library | Filter by domain/status, open contracts, load demos |
 | Contract editor | Sectioned form with live score + critical/warning alerts |
-| Ready gates | Blocks `ready` when owner/formula/source/grain/rules (and ratio parts) are missing |
+| Ready gates | Blocks `ready` / `in_review` when owner/formula/source/grain/rules (and ratio parts) are missing |
+| Local review workflow | Submit → approve/reject (browser-simulated, not multi-user) |
+| Version history + diff | Local revision log with governance-field diffs |
 | Maturity score | Six explainable components totaling 100 |
 | SQL templates | Documented templates by metric type |
-| Markdown export | Full contract artifact for review |
+| Markdown + dbt YAML export | Wiki/PR handoff + semantic-layer **documentation** template |
+| Conflict case | Marketing vs Product “conversion rate” resolved into one contract |
 | Local persistence | `localStorage` with Zod soft-parse on load |
 
 ---
@@ -95,14 +100,18 @@ Five ready demo contracts — net revenue, conversion rate, monthly churn, avera
 
 ```text
 src/
-├── app/                 # Next.js App Router pages
-├── components/          # UI, forms, export, shells
+├── app/                 # Next.js App Router pages (+ /cases/conversion-conflict)
+├── components/          # UI, forms, export, approval, version history
 └── lib/                 # Pure domain
     ├── metric-model.ts
     ├── validation.ts
     ├── maturity-score.ts
+    ├── contract-diff.ts
+    ├── contract-versions.ts
     ├── sql-generator.ts
     ├── markdown-export.ts
+    ├── dbt-export.ts
+    ├── conflict-case.ts
     ├── schemas.ts       # Zod persistence boundary
     ├── storage.ts
     ├── store.ts
@@ -193,31 +202,32 @@ More: [`docs/TECHNICAL_DECISIONS.md`](./docs/TECHNICAL_DECISIONS.md)
 
 ## Roadmap
 
-- **Now:** Local contracts, score, export, demos, CI, Vercel demo
-- **Next:** API + Postgres persistence
-- **Later:** Review workflow, dbt/MetricFlow export, connected quality checks, Playwright E2E
+- **Now:** Local contracts, score, local review + version diff, Markdown/dbt YAML templates, conflict case, CI
+- **Next:** Shared persistence (API + Postgres) and real multi-user review
+- **Later:** Wired MetricFlow/dbt sync, connected quality checks, Playwright E2E
 
 ---
 
 ## What this project demonstrates
 
 - Analytics engineering **governance thinking** (definition before dashboard)
-- Product sense for **internal data tools**
+- Organizational storytelling via a **metric conflict case**
 - Typed domain modeling with **testable pure functions**
-- UX for **empty/loading/error** and live validation feedback
-- Portfolio honesty: clear MVP boundaries
+- Local review/versioning as an honest MVP of approval workflows
+- Portfolio honesty: clear MVP boundaries (no fake multi-tenant backend)
 
 ---
 
 ## How I would present this in an interview
 
-1. **Problem:** “Two dashboards, same KPI name, different SQL.”
-2. **Artifact:** Open conversion rate → show score breakdown + critical gates.
-3. **Policy:** Flip status to ready on an incomplete draft → show enforcement.
-4. **Handoff:** Export Markdown / show SQL template disclaimer.
-5. **Trade-off:** Why local-first first, what a semantic-layer integration would unlock next.
+1. **Problem:** Open `/cases/conversion-conflict` — two dashboards, same label, incompatible grain.
+2. **Resolution:** Open `Taxa de conversão` — one agreed formula/grain/owner.
+3. **Policy:** Show critical gates + maturity breakdown.
+4. **Workflow:** Submit for review → approve → show version history/diff.
+5. **Handoff:** Export Markdown + dbt YAML (documentation template, not executed).
+6. **Trade-off:** Why local-first first; what real collaboration would require next.
 
-Interview framing: [`docs/portfolio-case.md`](./docs/portfolio-case.md) · [`HANDOFF_PORTFOLIO.md`](./HANDOFF_PORTFOLIO.md)
+Interview framing: [`docs/portfolio-case.md`](./docs/portfolio-case.md) · [`docs/PORTFOLIO_HANDOFF.md`](./docs/PORTFOLIO_HANDOFF.md)
 
 ---
 
@@ -229,6 +239,8 @@ Interview framing: [`docs/portfolio-case.md`](./docs/portfolio-case.md) · [`HAN
 - [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md)
 - [`docs/AUDIT_REPORT.md`](./docs/AUDIT_REPORT.md)
 - [`docs/HANDOFF.md`](./docs/HANDOFF.md)
+- [`docs/PORTFOLIO_HANDOFF.md`](./docs/PORTFOLIO_HANDOFF.md)
+- [`docs/CHANGELOG.md`](./docs/CHANGELOG.md)
 - [`docs/metric-contract-methodology.md`](./docs/metric-contract-methodology.md)
 
 ---

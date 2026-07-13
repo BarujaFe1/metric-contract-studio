@@ -41,17 +41,18 @@ There is **no server API** in the MVP. All CRUD happens in Zustand and persists 
 | `/metrics/[id]/edit` | Edit with live score/alerts |
 | `/examples` | Demo catalog |
 | `/methodology` | Contract methodology |
+| `/cases/conversion-conflict` | Organizational conflict → resolved contract |
 
 ## Data flow
 
 ```text
-User / Demo seed
-  → MetricContract
-  → validateMetric()
+User / Demo seed / Conflict case
+  → MetricContract (+ version, approval)
+  → validateMetric() / canSubmitForReview()
   → calculateMaturityScore()
-  → generateSqlTemplate() / exportMetricMarkdown()
-  → saveMetricsToStorage() (JSON)
-  → loadMetricsFromStorage() (Zod safeParse)
+  → recordVersion() + diffContracts()
+  → generateSqlTemplate() / exportMetricMarkdown() / exportDbtMetricYaml()
+  → saveMetricsToStorage() (JSON + Zod on load)
 ```
 
 ## Trust boundaries

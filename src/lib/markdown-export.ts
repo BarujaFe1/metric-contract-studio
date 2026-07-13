@@ -26,6 +26,8 @@ export function exportMetricMarkdown(metric: MetricContract): string {
     bullet("Name", metric.name),
     bullet("Slug", metric.slug),
     bullet("Status", STATUS_LABELS[metric.status]),
+    bullet("Version", `v${metric.version}`),
+    bullet("Approval", metric.approval?.state ?? "none"),
     bullet("Domain", DOMAIN_LABELS[metric.domain]),
     bullet("Type", METRIC_TYPE_LABELS[metric.metric_type]),
     bullet("Owner", metric.owner),

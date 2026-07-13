@@ -17,11 +17,11 @@ const BENEFITS = [
 ];
 
 const JOURNEY = [
-  "Open the library and load the five SaaS/e-commerce demos",
-  "Inspect conversion rate — score, critical gaps, and ownership",
-  "Review the SQL template and quality checklist",
-  "Export Markdown for a wiki/PR handoff",
-  "Create or edit a draft and watch ready-status gates fire live",
+  "Open the conversion conflict case — two dashboards, one label",
+  "Load demos and open Taxa de conversão (resolved contract)",
+  "Inspect score, grain, filters, and incorrect-usage example",
+  "Submit for review, approve, and read version history / diff",
+  "Export Markdown + dbt YAML as the handoff artifact",
 ];
 
 export default function HomePage() {
@@ -49,8 +49,16 @@ export default function HomePage() {
             nobody owns a single definition. This studio turns metrics into
             contracts — validated, scored, and exportable.
           </p>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap gap-3">
             <HomeDemoActions />
+          </div>
+          <div className="mt-4 flex flex-wrap gap-3 text-sm">
+            <Link
+              href="/cases/conversion-conflict"
+              className="rounded-md border border-white/30 px-4 py-2.5 font-medium text-white hover:bg-white/10"
+            >
+              See conflict case
+            </Link>
           </div>
           <p className="mt-4 text-xs text-[#d8ebe5]/55">
             Frontend-only demo · localStorage · no backend required

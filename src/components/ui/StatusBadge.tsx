@@ -6,6 +6,8 @@ const STATUS_STYLES: Record<MetricStatus, string> = {
     "bg-[var(--ready-soft)] text-[var(--ready)] border-[color-mix(in_srgb,var(--ready)_25%,transparent)]",
   draft:
     "bg-[var(--draft-soft)] text-[var(--draft)] border-[color-mix(in_srgb,var(--draft)_25%,transparent)]",
+  in_review:
+    "bg-[var(--info-soft)] text-[var(--info)] border-[color-mix(in_srgb,var(--info)_25%,transparent)]",
   deprecated:
     "bg-[var(--deprecated-soft)] text-[var(--deprecated)] border-[color-mix(in_srgb,var(--deprecated)_25%,transparent)]",
 };
