@@ -3,359 +3,158 @@
 
   <h1>Metric Contract Studio</h1>
 
-  <p><strong>Criação, validação, score de maturidade e exportação de contratos de métricas de negócio.</strong></p>
-  <p><strong>Create, validate, score and export business metric contracts for analytics governance.</strong></p>
+  <p><strong>Crie, valide, pontue e exporte contratos de métricas de negócio para governança de analytics.</strong></p>
+  <p><strong>Create, validate, score and export business metric contracts for analytics engineering governance.</strong></p>
 
   <p>
-    <a href="#1-visão-geral--overview">PT-BR / English Overview</a> •
-    <a href="#-product-preview">Preview</a> •
-    <a href="#-screenshots">Screenshots</a> •
-    <a href="#-stack--tecnologias">Stack</a> •
-    <a href="#-arquitetura--architecture">Architecture</a> •
-    <a href="#-quick-start--início-rápido">Quick Start</a> •
-    <a href="#-autor--author">Author</a>
+    <a href="#pt-br">PT-BR</a> ·
+    <a href="#english">English</a> ·
+    <a href="#live-demo">Live Demo</a> ·
+    <a href="#stack">Stack</a> ·
+    <a href="#architecture">Architecture</a> ·
+    <a href="#quick-start">Quick Start</a> ·
+    <a href="#author">Author</a>
   </p>
 
   <p>
     <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=nextdotjs" />
-    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-React-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
-    <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind-CSS%20v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
-    <img alt="Zustand" src="https://img.shields.io/badge/Zustand-State-764ABC?style=for-the-badge" />
-    <img alt="Vitest" src="https://img.shields.io/badge/Vitest-Testing-729B1B?style=for-the-badge&logo=vitest&logoColor=white" />
-    <img alt="Metric Governance" src="https://img.shields.io/badge/Metric%20Governance-Analytics%20Engineering-0F5C4C?style=for-the-badge" />
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+    <img alt="Zustand" src="https://img.shields.io/badge/Zustand-localStorage-764ABC?style=for-the-badge" />
+    <img alt="Zod" src="https://img.shields.io/badge/Zod-Validation-3E67B1?style=for-the-badge" />
+    <img alt="Status" src="https://img.shields.io/badge/Status-Lab%20demo-22C55E?style=for-the-badge" />
+    <img alt="License" src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" />
   </p>
 
   <p>
-    <a href="https://metric-contract-studio.vercel.app">
-      <img alt="Live Demo" src="https://img.shields.io/badge/Live%20Demo-metric--contract--studio.vercel.app-0F5C4C?style=for-the-badge" />
-    </a>
-    <a href="https://github.com/BarujaFe1/metric-contract-studio">
-      <img alt="GitHub" src="https://img.shields.io/badge/GitHub-BarujaFe1%2Fmetric--contract--studio-181717?style=for-the-badge&logo=github" />
-    </a>
+    <a href="https://metric-contract-studio.vercel.app"><strong>Live Demo</strong></a> ·
+    <a href="https://github.com/BarujaFe1/metric-contract-studio"><strong>Repo</strong></a> ·
+    <a href="https://barujafe.vercel.app/"><strong>Portfolio</strong></a> ·
+    <a href="https://www.linkedin.com/in/barujafe/"><strong>LinkedIn</strong></a>
   </p>
 </div>
 
 <p align="center">
-  <strong>🚀 Live Demo:</strong>
-  <a href="https://metric-contract-studio.vercel.app">https://metric-contract-studio.vercel.app</a>
-  · frontend-only · 5 demo contracts · localStorage · no backend
+  <img src="./assets/hero-cover.png" alt="Metric Contract Studio overview" width="100%" />
 </p>
 
-<p align="center">
-  <img src="./assets/hero-cover.png" alt="Metric Contract Studio product overview" width="100%" />
-</p>
+> **Lab / demo notice:** frontend-first portfolio app with **localStorage** persistence. Not a multi-user metric catalog, not a warehouse executor, and not a dbt/MetricFlow replacement.
 
 ---
 
-## 1. Visão Geral / Overview
+## PT-BR
 
-O **Metric Contract Studio** é um produto de analytics engineering criado para transformar KPIs ambíguos em **contratos de métrica** revisáveis.
+### Visão geral
+O **Metric Contract Studio** trata métricas como contratos: pergunta de negócio, fórmula, grain, owner, validações, limitações, score de maturidade explicável, template SQL e export Markdown.
 
-Ele permite definir objetivo de negócio, fórmula, fonte, granularidade, owner, regras de validação, limitações e exemplos de uso — e então calcula um **score de maturidade explicável (0–100)**, gera **SQL template**, checklist de qualidade e **exportação Markdown**. Em vez de tratar métricas como tiles de dashboard, o Studio as trata como artefatos de governança.
+### Problema
+Times discutem receita, conversão e churn porque cada dashboard carrega uma definição diferente — e ninguém tem um artefato compartilhado de governança.
 
-O projeto foi desenvolvido por **Felipe Alirio Baruja** como peça de portfólio para analytics engineering, combinando modelagem conceitual, qualidade de dados, documentação técnica e UX de ferramenta interna.
+### Para quem
+Analytics engineers, data analysts e product analysts que precisam padronizar KPIs antes do deck executivo.
 
-> **Governance Notice**  
-> O Metric Contract Studio documenta e valida definições de métricas. Ele **não executa SQL** contra warehouses externos e **não substitui** semantic layers (dbt/MetricFlow) no MVP. O SQL gerado é template documentado, não job de produção.
+### Funcionalidades
+- Biblioteca de métricas e editor de contrato
+- Validação com Zod e regras de completude
+- Score de maturidade 0–100 explicável (pontos ganhos/perdidos)
+- Alertas críticos (ex.: taxa sem denominador)
+- Geração de template SQL + export Markdown
+- 5 métricas demo SaaS/e-commerce no primeiro acesso
+- Testes Vitest da lógica de domínio
 
----
-
-## ✨ Product Preview
-
-<p align="center">
-  <img src="./assets/screenshots/01-home-hero.png" alt="Metric Contract Studio Home" width="100%" />
-</p>
-
-O Metric Contract Studio apresenta uma experiência de ferramenta interna focada em governança: biblioteca de contratos, score de maturidade, alertas de lacunas, SQL template e exportação Markdown.
-
----
-
-## 2. Por que este projeto importa? / Why this project matters
-
-* **Métricas sem contrato geram conflito:** Receita, conversão, churn e ativação mudam de significado entre times. Sem definição única, dashboards discordam e decisões pioram.
-* **Governança precisa ser produto:** Documentação em wiki solta não escala. Um contrato com validação, score e exportação torna a definição revisável.
-* **Analytics engineering é mais que SQL:** O projeto prova julgamento de modelagem, qualidade, ownership e comunicação com stakeholders.
-* **Portfólio com sinal real:** Em vez de só mostrar gráficos, demonstra como um time de dados evita caos semântico antes da visualização.
+### Escopo e limites (honestos)
+- Sem backend, auth ou colaboração multi-usuário
+- SQL é documentação/template — **não executa** no warehouse
+- Sem integração dbt / MetricFlow / semantic layer
+- Persistência apenas em `localStorage`
 
 ---
 
-## 🧠 O diferencial do Metric Contract Studio / What makes it different
+## English
 
-### Português
-O Metric Contract Studio não é um formulário genérico. Ele combina governança de métricas, validação de completude e documentação operacional em uma experiência rastreável.
+### Overview
+**Metric Contract Studio** treats metrics as contracts: business question, formula, grain, owner, validations, limitations, explainable maturity score, SQL template and Markdown export.
 
-Ele mostra não apenas a definição da métrica, mas também:
-- quão maduro o contrato está;
-- quais lacunas críticas bloqueiam o status `ready`;
-- quais warnings ainda merecem atenção;
-- como gerar um SQL template a partir do contrato;
-- como exportar um artefato Markdown para wiki/PR;
-- como exemplos corretos e incorretos reduzem uso indevido.
+### Problem
+Teams argue about revenue, conversion and churn because every dashboard encodes a different definition — with no shared governance artifact.
 
-### English
-Metric Contract Studio is not a generic form. It combines metric governance, completeness validation and operational documentation into one traceable experience.
+### Who it is for
+Analytics engineers, data analysts and product analysts who need KPI contracts before the board deck.
 
-It shows not only the metric definition, but also:
-- how mature the contract is;
-- which critical gaps block `ready` status;
-- which warnings still deserve attention;
-- how to generate a SQL template from the contract;
-- how to export a Markdown artifact for wiki/PR;
-- how correct/incorrect examples reduce misuse.
+### Features
+- Metrics library and contract editor
+- Zod validation and completeness rules
+- Explainable 0–100 maturity score (earned vs lost points)
+- Critical alerts (e.g. rate without denominator)
+- SQL template generation + Markdown export
+- Five SaaS/e-commerce demo metrics on first visit
+- Vitest coverage for domain logic
 
----
-
-## 🎯 Problema que resolve / The problem it solves
-
-Em fluxos reais de analytics, métricas costumam quebrar por:
-- granularidade ambígua (pedido vs sessão vs usuário);
-- filtros ocultos (bots, testes, estornos, contas internas);
-- owners genéricos (“time de dados”);
-- rates/ratios sem numerador e denominador explícitos;
-- ausência de regras de validação;
-- falta de limitações e exemplos de uso incorreto;
-- SQL copiado de Slack sem fonte de verdade;
-- dashboards conflitantes com a mesma label de KPI.
-
-O **Metric Contract Studio** cria uma camada auditável entre a intenção de negócio e a implementação analítica.
+### Scope and honest limits
+- No backend, auth or multi-user collaboration
+- SQL is documentation/template — **does not execute** in a warehouse
+- No dbt / MetricFlow / semantic-layer sync
+- Persistence is `localStorage` only
 
 ---
 
-## 🧩 Proposta / Metric Contract Pipeline
+## Live Demo
 
-O Studio transforma uma métrica em um contrato governável:
+| Surface | URL |
+|---|---|
+| **Public lab** | [https://metric-contract-studio.vercel.app](https://metric-contract-studio.vercel.app) |
+| **GitHub** | [https://github.com/BarujaFe1/metric-contract-studio](https://github.com/BarujaFe1/metric-contract-studio) |
 
-```txt
-Business Question
-  ↓
-Metric Contract (identity, formula, source, grain, owner)
-  ↓
-Validation Rules + Fields + Usage Examples
-  ↓
-Completeness Alerts (critical / warning)
-  ↓
-Explainable Maturity Score (0–100)
-  ↓
-SQL Template + Quality Checklist
-  ↓
-Markdown Export (wiki / PR / handoff)
-```
+**How to try:** open the app → browse demo contracts → open maturity score → trigger a validation alert → generate SQL template → export Markdown.
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 <table>
   <tr>
-    <td width="50%">
-      <img src="./assets/screenshots/02-metrics-library.png" alt="Metrics Library" />
-      <br />
-      <sub><strong>Metrics Library</strong> — contratos com status, domínio, score e badges de lacunas.</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/screenshots/03-metric-detail.png" alt="Metric Detail" />
-      <br />
-      <sub><strong>Metric Detail</strong> — resumo executivo, score explicável e alertas de governança.</sub>
-    </td>
+    <td width="50%"><img src="./assets/screenshots/01-home-hero.png" alt="Home" /><br /><sub><strong>Home</strong></sub></td>
+    <td width="50%"><img src="./assets/screenshots/02-metrics-library.png" alt="Library" /><br /><sub><strong>Metrics library</strong></sub></td>
   </tr>
   <tr>
-    <td width="50%">
-      <img src="./assets/screenshots/04-metric-editor.png" alt="Metric Editor" />
-      <br />
-      <sub><strong>Metric Editor</strong> — formulário seccionado com maturidade e gaps em tempo real.</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/screenshots/05-sql-and-export.png" alt="SQL Template and Export" />
-      <br />
-      <sub><strong>SQL & Export</strong> — template SQL documentado, checklist e exportação Markdown.</sub>
-    </td>
+    <td width="50%"><img src="./assets/screenshots/03-metric-detail.png" alt="Detail" /><br /><sub><strong>Metric detail</strong></sub></td>
+    <td width="50%"><img src="./assets/screenshots/04-metric-editor.png" alt="Editor" /><br /><sub><strong>Editor</strong></sub></td>
   </tr>
   <tr>
-    <td width="50%">
-      <img src="./assets/screenshots/06-methodology.png" alt="Methodology" />
-      <br />
-      <sub><strong>Methodology</strong> — o que é contrato de métrica, por que quebra e como validar.</sub>
-    </td>
-    <td width="50%">
-      <img src="./assets/screenshots/01-home-hero.png" alt="Home Hero" />
-      <br />
-      <sub><strong>Home</strong> — tese do produto, CTAs e posicionamento de governança.</sub>
-    </td>
+    <td width="50%"><img src="./assets/screenshots/05-sql-and-export.png" alt="SQL export" /><br /><sub><strong>SQL + export</strong></sub></td>
+    <td width="50%"><img src="./assets/screenshots/06-methodology.png" alt="Methodology" /><br /><sub><strong>Methodology</strong></sub></td>
   </tr>
 </table>
 
 ---
 
-## 📄 Artefatos de Handoff
+## Stack
 
-O Studio gera artefatos prontos para operação e entrevista:
-
-- **Markdown contract** com identidade, fórmula, fonte, validações, score e checklist
-- **SQL template** por tipo de métrica (`sum`, `rate`, `average`, etc.)
-- **Quality checklist** para revisão antes de adoção ampla
-- **HANDOFF_PORTFOLIO.md** com copy para LinkedIn e entrevistas
-
----
-
-## 📌 Estudo de Caso / Case Study
-
-### 📌 Estudo de Caso: Métricas SaaS / E-commerce
-O MVP inclui 5 contratos demo prontos: **Receita líquida**, **Taxa de conversão**, **Churn mensal**, **Ticket médio** e **Ativação de usuário**. Cada um traz pergunta de negócio, fórmula, fonte, grain, validações, limitações e exemplos corretos/incorretos.
-
-A camada de validação bloqueia status `ready` quando faltam owner, fórmula, fonte, grain, refresh ou regras — e exige numerador/denominador em métricas `rate`/`ratio`. O score de maturidade explica pontos ganhos e perdidos por componente.
-
-### 📌 Case Study: SaaS / E-commerce Metrics
-The MVP ships 5 ready demo contracts: **Net revenue**, **Conversion rate**, **Monthly churn**, **Average order value** and **User activation**. Each includes business question, formula, source, grain, validations, limitations and correct/incorrect usage examples.
-
-Validation blocks `ready` status when owner, formula, source, grain, refresh or rules are missing — and requires numerator/denominator for `rate`/`ratio` metrics. The maturity score explains earned and lost points by component.
+| Layer | Technology |
+|---|---|
+| App | Next.js 16, React 19, TypeScript, Tailwind CSS 4 |
+| State / validation | Zustand, Zod, uuid, localStorage |
+| Charts / tests | Recharts, Vitest |
 
 ---
 
-## 🧭 Visual Story / Jornada do Usuário
-
-A experiência foi pensada como uma jornada de governança:
+## Architecture
 
 ```txt
-1. Abrir a Home e entender a tese do produto
-2. Entrar na Library e carregar métricas demo
-3. Abrir um contrato (ex.: Taxa de conversão)
-4. Ler score de maturidade e alertas de lacunas
-5. Revisar SQL template e checklist de qualidade
-6. Exportar Markdown do contrato
-7. Criar/editar uma métrica e ver validação ao vivo
-8. Consultar Methodology para o framework de contrato
+src/
+  app/            Next.js App Router pages
+  components/     UI (forms, metrics, layout, export)
+  lib/            metric-model, validation, maturity-score, sql-generator, storage, store
+  tests/          Vitest domain tests
+assets/           icon, hero, screenshots
 ```
 
----
-
-## ⚙️ Funcionalidades Principais / Core Features
-
-### Metric Library
-Biblioteca filtrável por domínio e status, com cards de maturidade e badges de gaps críticos.
-
-### Contract Editor
-Formulário em seções: identidade, negócio, fórmula/campos, fonte/grain, validações, limitações/exemplos — com score e alertas live.
-
-### Maturity Score
-Score 0–100 explicável:
-- Business definition (20)
-- Formula & fields (20)
-- Source & granularity (20)
-- Validations (20)
-- Limitations & examples (10)
-- Owner & maintenance (10)
-
-### Validation Gates
-Regras críticas e warnings testáveis (Vitest), incluindo bloqueio de `ready` para contratos incompletos.
-
-### SQL Template + Markdown Export
-Geração de template SQL documentado e exportação do contrato completo em Markdown.
-
-### Demo Metrics Loader
-Carga de 5 métricas SaaS/e-commerce para demonstração imediata.
+Flow: edit contract → validate → score maturity → SQL template / Markdown export → persist in browser storage.
 
 ---
 
-## 🛠️ Stack / Tecnologias
+## Quick Start
 
-### Frontend
-- **Framework:** Next.js 16 (App Router) & React 19
-- **Linguagem:** TypeScript
-- **Estilização:** Tailwind CSS v4
-- **Estado:** Zustand + localStorage
-- **Validação de modelo:** Zod schemas + regras puras
-- **Indicadores:** Recharts
-- **Testes:** Vitest
-
-### Escopo do MVP
-- Frontend-first (sem backend pesado)
-- Persistência local via `localStorage`
-- Sem auth, multi-usuário ou execução real de SQL
-
----
-
-## 🧱 Arquitetura / Architecture
-
-```text
-metric-contract-studio/
-├── src/
-│   ├── app/                         # Rotas App Router
-│   │   ├── page.tsx                 # Home
-│   │   ├── metrics/                 # Library / New / Detail / Edit
-│   │   ├── examples/                # Catálogo demo
-│   │   └── methodology/             # Metodologia de contrato
-│   │
-│   ├── components/
-│   │   ├── layout/                  # AppShell
-│   │   ├── metrics/                 # Cards, score, gaps, sections
-│   │   ├── forms/                   # MetricForm + ValidationRulesEditor
-│   │   ├── export/                  # SQL viewer + Markdown export
-│   │   └── ui/                      # Badges, EmptyState
-│   │
-│   ├── lib/                         # Domínio puro e testável
-│   │   ├── metric-model.ts
-│   │   ├── validation.ts
-│   │   ├── maturity-score.ts
-│   │   ├── sql-generator.ts
-│   │   ├── markdown-export.ts
-│   │   ├── demo-data.ts
-│   │   ├── storage.ts
-│   │   ├── store.ts
-│   │   └── schemas.ts
-│   │
-│   └── tests/                       # Vitest (validação, score, export, demo)
-│
-├── docs/                            # Metodologia, examples, data model, case
-├── assets/                          # Icon, hero, screenshots, social preview
-├── HANDOFF_PORTFOLIO.md             # Copy de portfólio / entrevista
-└── README.md                        # Esta documentação
-```
-
----
-
-## 🧱 Visual Architecture
-
-<p align="center">
-  <img src="./assets/architecture-pipeline.png" alt="Metric Contract Studio visual architecture" width="100%" />
-</p>
-
-Metric Contract Studio follows a governance flow: define the contract, validate completeness, score maturity, generate SQL template and export Markdown documentation.
-
----
-
-## 🔁 Data Flow Pipeline
-
-```txt
-User Input / Demo Metrics
-  ↓
-MetricContract domain model
-  ↓
-Pure validation rules (critical + warning)
-  ↓
-Explainable maturity scoring
-  ↓
-SQL template generation
-  ↓
-Markdown export + quality checklist
-  ↓
-localStorage persistence (MVP)
-```
-
----
-
-## 🚀 Quick Start / Início Rápido
-
-### Live Demo
-A versão pública está em **[https://metric-contract-studio.vercel.app](https://metric-contract-studio.vercel.app)**.
-
-Na primeira visita, o Studio carrega automaticamente **5 contratos demo** (Receita líquida, Taxa de conversão, Churn mensal, Ticket médio, Ativação de usuário) via `localStorage` — sem API, Supabase ou backend externo.
-
-### Pré-requisitos
-- **Node.js** v20 ou superior
-- **npm**
-- **Git**
-
-### Execução local
+**Prerequisites:** Node.js 20+, npm, Git.
 
 ```bash
 git clone https://github.com/BarujaFe1/metric-contract-studio.git
@@ -364,155 +163,42 @@ npm install
 npm run dev
 ```
 
-Abra [http://localhost:3000](http://localhost:3000).
-
-As métricas demo são carregadas automaticamente na primeira visita (localStorage).
-
----
-
-## 🧪 Scripts e Testes / Scripts and Testing
+Open [http://localhost:3000](http://localhost:3000). Demo metrics load automatically on first visit.
 
 ```bash
-npm test          # Vitest — validação, score, SQL, Markdown, demo data
-npm run lint      # ESLint
-npm run build     # Build de produção Next.js
-npm run dev       # Servidor de desenvolvimento
-```
-
-### Cobertura de testes do MVP
-1. slug generation  
-2. validação sem owner  
-3. validação sem grain  
-4. rate sem numerador/denominador  
-5. cálculo de maturity score  
-6. geração de Markdown  
-7. geração de SQL template  
-8. consistência das métricas demo  
-
----
-
-## 📊 Metodologia de Contrato / Contract Methodology
-
-Um **contrato de métrica** é a fonte de verdade revisável de um KPI.
-
-### Gates críticos (não pode ser `ready`)
-- owner
-- business question
-- formula
-- source system + table
-- grain
-- refresh frequency
-- pelo menos 1 validation rule
-- numerator/denominator para `rate`/`ratio`
-
-### Warnings
-- limitations vazias
-- sem exemplo de uso incorreto
-- sem default filters
-- sem required fields
-- owner genérico (“data team”)
-- fórmula muito curta
-
-Documentação completa: [`docs/metric-contract-methodology.md`](./docs/metric-contract-methodology.md)
-
----
-
-## 🛡️ Limitações Honestas / Honest Limitations
-
-* Persistência apenas em `localStorage` (MVP)
-* SQL é template documentado, não execução em warehouse
-* Sem autenticação / multi-usuário / permissões
-* Sem integração dbt / MetricFlow no MVP
-* Screenshots em `assets/` são previews de produto para portfólio
-
----
-
-## 🧭 Roadmap do Produto
-
-* **Fase 0 — MVP local:** contratos, score, SQL, Markdown, demos, testes
-* **Fase 1 — Persistência:** API + SQLite/Postgres
-* **Fase 2 — Review workflow:** draft → review → ready com versionamento
-* **Fase 3 — Semantic layer:** export para dbt docs / MetricFlow
-* **Fase 4 — Quality runners:** checks SQL conectados a sandbox
-* **Fase 5 — E2E:** Playwright no fluxo criar → validar → exportar
-
----
-
-## 💼 Valor para Portfólio / Portfolio Value
-
-O Metric Contract Studio demonstra competências críticas para **Analytics Engineering** e **Data Product**:
-
-- governança de métricas e definição semântica
-- modelagem conceitual de contratos de KPI
-- design de validação e qualidade de dados
-- documentação técnica como produto
-- UX de ferramenta interna
-- TypeScript forte com regras puras e testáveis
-- pensamento de produto para times de dados
-
----
-
-## 📚 Documentação Complementar
-
-- [`HANDOFF_PORTFOLIO.md`](./HANDOFF_PORTFOLIO.md) — títulos, bullets, roteiro de entrevista e post de LinkedIn
-- [`docs/metric-contract-methodology.md`](./docs/metric-contract-methodology.md) — metodologia de contrato
-- [`docs/examples.md`](./docs/examples.md) — métricas demo documentadas
-- [`docs/data-model.md`](./docs/data-model.md) — modelo conceitual
-- [`docs/portfolio-case.md`](./docs/portfolio-case.md) — framing de case para entrevista
-
----
-
-## 🖼️ GitHub Social Preview
-
-Uma imagem para visualização social está disponível em:
-
-```txt
-assets/social-preview.png
-```
-
-*Dimensão recomendada: 1280×640, &lt;1MB. Faça upload em: Repository Settings → Social Preview.*
-
----
-
-## 🔖 GitHub Repository Metadata
-
-### About sugerido
-```txt
-Create, validate, score and export business metric contracts for analytics engineering governance.
-```
-
-### Topics sugeridos
-```txt
-analytics-engineering
-metric-governance
-data-quality
-nextjs
-typescript
-tailwindcss
-zustand
-vitest
-portfolio-project
-data-documentation
-sql-templates
-business-metrics
-kpi
-semantic-layer
+npm test
 ```
 
 ---
 
-## 👤 Autor / Author
+## Technical decisions
 
-Desenvolvido por **Felipe Alirio Baruja**.
-
-- **Portfolio:** [barujafe.vercel.app](https://barujafe.vercel.app/)
-- **GitHub:** [@BarujaFe1](https://github.com/BarujaFe1)
-- **LinkedIn:** [Gustavo Felipe Alirio Baruja](https://www.linkedin.com/in/barujafe/)
+- **Frontend-first** so the demo deploys without a database
+- **Explainable maturity score** to make governance measurable, not subjective
+- **SQL as artifact** (not execution) to keep warehouse risk out of the MVP
+- **Zustand + localStorage** for a realistic internal-tool feel with zero infra
 
 ---
 
-## 📄 Licença / License
+## Roadmap
 
-MIT License. Copyright (c) 2026 Felipe Alirio Baruja.
+- API + database persistence
+- Review workflow and contract versioning
+- Export to dbt docs / semantic layer
+- Optional Playwright path: create → validate → export
 
-O código está disponível sob a licença MIT — ver arquivo [`LICENSE`](./LICENSE).
+---
+
+## Author
+
+**Felipe Alirio Baruja** — data / product / full-stack portfolio.
+
+- Portfolio: [https://barujafe.vercel.app/](https://barujafe.vercel.app/)
+- GitHub: [https://github.com/BarujaFe1](https://github.com/BarujaFe1)
+- LinkedIn: [https://www.linkedin.com/in/barujafe/](https://www.linkedin.com/in/barujafe/)
+
+---
+
+## License
+
+MIT — see [`LICENSE`](./LICENSE).
